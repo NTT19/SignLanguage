@@ -28,7 +28,7 @@ import { Button, StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Login from './Login/Login'; // Đảm bảo đúng đường dẫn
-
+import SignUp from './SignUp/SignUp'; // Đảm bảo đúng đường dẫn
 const Stack = createStackNavigator();
 
 function HomeScreen({ navigation }) {
@@ -49,6 +49,7 @@ export default function App() {
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="SignUp" component={SignUp} />
       </Stack.Navigator>
     </NavigationContainer>
   );
