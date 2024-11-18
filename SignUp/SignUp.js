@@ -218,6 +218,6 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     marginTop: 20,
-    resizeMode: 'contain', // Ensures the image scales correctly
+    resizeMode: 'contain', 
   },
 });
