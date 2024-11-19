@@ -95,6 +95,7 @@ export default function SignUp({ navigation }) {
 
   return (
     <View style={styles.root}>
+      <View style={styles.rectangle1} />
     <Image source={require('../assets/Image/Plantify_no_background.png')} style={styles.headerImage} />
       <Text style={styles.title}>Sign Up</Text>
 
@@ -166,11 +167,19 @@ export default function SignUp({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  rectangle1: {
+    position: 'absolute',
+    top: 0,
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#fff',
+  },
     headerImage: {
         marginTop: 1,
         width: 420,
         height: 245,
         resizeMode: 'contain',
+        backgroundColor: '#fff',
       },
   root: {
     flex: 1,

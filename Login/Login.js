@@ -54,8 +54,11 @@ export default function LogIn({ navigation }) {
   //   style={styles.rectangle1} 
   // >
     <View style={styles.root}>
+
       <View style={styles.rectangle1} />
+    <View style={styles.rectangle10} />
       <View style={styles.rectangle2} />
+  
       <Image source={require('../assets/Image/Plantify_no_background.png')} style={styles.headerImage} />
       <View style={styles.rectangle3}>
         <TextInput
@@ -76,13 +79,13 @@ export default function LogIn({ navigation }) {
           onChangeText={setPassword}
         />
       </View>
+            <TouchableOpacity onPress={handleForgotPassword}>
+        <Text style={styles.forgotPassword}>Forgot Password?</Text>
+      </TouchableOpacity>
       <TouchableOpacity style={styles.segment} onPress={handleLogin}>
         <View style={styles.rectangle22}>
           <Text style={styles.logIn}>LOG IN</Text>
         </View>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={handleForgotPassword}>
-        <Text style={styles.forgotPassword}>Forgot Password?</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={handleSignUp}>
       <Text style={styles.dontHaveAnAccountSignUp}>
@@ -120,19 +123,30 @@ const styles = StyleSheet.create({
     top: 0,
     width: '100%',
     height: '100%',
-    backgroundColor: '#F5F5F5',
+  //  backgroundColor: '#ecf0f1',
+    backgroundColor: '#FFF',
+  },
+  rectangle10: {
+    position: 'absolute',
+    bottom: 480 ,
+    width: '100%',
+    height: '1%',
+    //backgroundColor: '#E0E0E0',
+    backgroundColor: 'black',
   },
   rectangle2: {
     position: 'absolute',
     top: 0,
     width: '100%',
     height: '40%',
-    backgroundColor: '#E0E0E0',
+    //backgroundColor: '#E0E0E0',
+    backgroundColor: '#FFF',
   },
   headerImage: {
     width: 420,
     height: 295,
     resizeMode: 'contain',
+
   },
   rectangle3: {
     marginTop: 20,
