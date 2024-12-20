@@ -175,6 +175,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     width: '85%',
     alignItems: 'center',
+  
   },
   rectangle22: {
     width: '100%',

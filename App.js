@@ -29,12 +29,13 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Login from './Login/Login'; // Đảm bảo đúng đường dẫn
 import SignUp from './SignUp/SignUp'; // Đảm bảo đúng đường dẫn
+
 const Stack = createStackNavigator();
 
 function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <Text style={{ color: 'red' }}>Hello World</Text>
+      <Text style={{ color: 'red' }}>Hello NTT</Text>
       <Button 
         title="Go to Login" 
         onPress={() => navigation.navigate('Login')} 
