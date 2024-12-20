@@ -30,7 +30,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Login from './Login/Login'; // Đảm bảo đúng đường dẫn
 import SignUp from './SignUp/SignUp'; // Đảm bảo đúng đường dẫn
 import Display from './Display/Display';
-
+import Home from './Home/Home';
 const Stack = createStackNavigator();
 
 function HomeScreen({ navigation }) {
@@ -52,6 +52,7 @@ export default function App() {
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="SignUp" component={SignUp} />
+        <Stack.Screen name="HomeV1" component={Home} />
         <Stack.Screen name="Display" component={Display} />
       </Stack.Navigator>
     </NavigationContainer>
