@@ -33,7 +33,7 @@ export default function LogIn({ navigation }) {
     } else {
       Alert.alert('Success', `Welcome, ${username}!`);
       // Navigate to a different page (if needed)
-      // navigation.navigate('Home');
+       navigation.navigate('Display');
     }
   };
 
