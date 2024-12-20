@@ -277,17 +277,17 @@ export default function LoginScreen({ navigation }) {
       Alert.alert('Lỗi', 'Vui lòng nhập email và mật khẩu.');
     } else {
       Alert.alert('Thành công', `Chào mừng, ${email}!`);
-      navigation.navigate('HomeV1'); // Chuyển đến màn hình chính
+      navigation.navigate('HomeV1'); 
     }
   };
 
   const handleForgotPassword = () => {
     Alert.alert('Quên mật khẩu', 'Chuyển hướng đến trang khôi phục mật khẩu.');
-   // navigation.navigate('ForgotPassword'); // Điều hướng nếu cần
+   // navigation.navigate('ForgotPassword'); 
   };
 
   const handleSignUp = () => {
-    navigation.navigate('SignUp'); // Chuyển đến màn hình đăng ký
+    navigation.navigate('SignUp'); 
   };
 
 

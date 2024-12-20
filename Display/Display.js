@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
-import { Ionicons } from '@expo/vector-icons'; // Nếu sử dụng Expo hoặc thư viện vector icon
+import { Ionicons } from '@expo/vector-icons'; 
 
 export default function DataScreen() {
+  const [isStarted, setIsStarted] = useState(false);
+  const handlePress = () => {
+    setIsStarted(!isStarted); // Đảo ngược trạng thái khi nút được nhấn
+  };
   return (
     <View style={styles.container}>
       {/* Header */}
@@ -46,8 +50,9 @@ export default function DataScreen() {
       </View>
 
       {/* Start Button */}
-      <TouchableOpacity style={styles.startButton}>
-        <Text style={styles.startButtonText}>Bắt đầu</Text>
+      <TouchableOpacity style={[styles.startButton,{ backgroundColor: isStarted ? '#FF0000' : '#007BFF' },
+        ]} onPress={handlePress}>
+        <Text style={styles.startButtonText}>{isStarted ? 'Kết thúc ngay' : 'Bắt đầu'}</Text>
       </TouchableOpacity>
     </View>
   );

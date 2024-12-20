@@ -27,8 +27,8 @@ import React from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import Login from './Login/Login'; // Đảm bảo đúng đường dẫn
-import SignUp from './SignUp/SignUp'; // Đảm bảo đúng đường dẫn
+import Login from './Login/Login'; 
+import SignUp from './SignUp/SignUp'; 
 import Display from './Display/Display';
 import Home from './Home/Home';
 const Stack = createStackNavigator();

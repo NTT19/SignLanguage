@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { Ionicons } from '@expo/vector-icons'; // Nếu sử dụng Expo hoặc thư viện vector icon
-
+import { Ionicons } from '@expo/vector-icons'; 
 export default function HomeScreen({ navigation }) {
 
     const handleTraining = () => {
