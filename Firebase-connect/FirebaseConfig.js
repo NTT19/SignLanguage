@@ -1,22 +1,21 @@
-import firebase from '@react-native-firebase/app';
-import '@react-native-firebase/database';
+// firebase.js
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+import { getDatabase, ref, onValue } from "firebase/database";
 
-// Cấu hình Firebase
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  databaseURL: "YOUR_DATABASE_URL",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID",
+  apiKey: "AIzaSyDmGLdWtne-XC0kQI5wGBrH0rYqwMbF_h8",
+  authDomain: "signlanguage-7f551.firebaseapp.com",
+  databaseURL: "https://signlanguage-7f551-default-rtdb.asia-southeast1.firebasedatabase.app/",
+  projectId: "signlanguage-7f551",
+  storageBucket: "signlanguage-7f551.firebasestorage.app",
+  messagingSenderId: "114094126392",
+  appId: "1:114094126392:web:10eb8bcc45c1947c8e7dcd",
+  measurementId: "G-5L9Y62Y5EP"
 };
 
-// Khởi tạo Firebase
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-}
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const database = getDatabase(app);
 
-export const database = firebase.database();
-
-export default firebase;
+export { db, database, ref, onValue };
