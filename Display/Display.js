@@ -13,7 +13,7 @@ export default function DataScreen() {
 
   // Lấy dữ liệu từ Firebase
   useEffect(() => {
-    const dbRef = ref(database, "/");
+    const dbRef = ref(database, "/name");
     const unsubscribe = onValue(dbRef, (snapshot) => {
       const data = snapshot.val();
       if (data) {
