@@ -1,72 +1,133 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, TextInput } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { database, ref, onValue } from "../Firebase-connect/FirebaseConfig";
 
 export default function DataScreen() {
   const [isStarted, setIsStarted] = useState(false);
   const [frameData, setFrameData] = useState("Đang tải dữ liệu...");
+  const [apiResult, setApiResult] = useState(null);
+  const [predictedLetter, setPredictedLetter] = useState(null);
 
   const handlePress = () => {
     setIsStarted(!isStarted);
   };
 
-  // Lấy dữ liệu từ Firebase
+
   useEffect(() => {
-    const dbRef = ref(database, "/name");
+    const dbRef = ref(database, "/IoT"); 
     const unsubscribe = onValue(dbRef, (snapshot) => {
       const data = snapshot.val();
       if (data) {
-        setFrameData(JSON.stringify(data, null, 2)); // Hiển thị toàn bộ dữ liệu dạng JSON
+        setFrameData(data); 
       } else {
         setFrameData("Không có dữ liệu.");
       }
     });
 
-    return () => unsubscribe(); // Cleanup khi component unmount
+    return () => unsubscribe(); 
   }, []);
+
+
+  const processData = async () => {
+    if (typeof frameData === "string" || !frameData) {
+      alert("Không có dữ liệu hợp lệ để gửi đến API.");
+      return;
+    }
+
+    const apiUrl = "https://unaware-zondra-phananhlocpal-0b40f072.koyeb.app/predict"; 
+
+
+    const payload = {
+      tilt_input: Object.values(frameData.tilt),
+      accel_input: [frameData.accel_x, frameData.accel_y, frameData.accel_z],
+    };
+
+    try {
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        setApiResult(result);
+
+
+        const classToLetter = (predictedClass) =>
+          String.fromCharCode(65 + predictedClass); 
+        setPredictedLetter(classToLetter(result.predicted_class));
+      } else {
+        alert("Có lỗi xảy ra khi gửi dữ liệu đến API.");
+      }
+    } catch (error) {
+      alert("Lỗi kết nối đến API: " + error.message);
+    }
+  };
 
   return (
     <View style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>Dữ liệu</Text>
+        <Text style={styles.headerTitle}>Xử lý dữ liệu</Text>
         <Ionicons name="person-circle-outline" size={32} color="black" />
       </View>
 
       {/* Frame Section */}
       <View style={styles.frameContainer}>
-        <Text style={styles.sectionTitle}>Khung hình</Text>
-        <View style={styles.frameBox}>
-          <Text style={styles.frameText}>{frameData}</Text>
-        </View>
+        <Text style={styles.sectionTitle}>Dữ liệu từ Firebase</Text>
+        <ScrollView style={styles.frameBox}>
+          <Text style={styles.frameText}>
+            {typeof frameData === "string"
+              ? frameData
+              : JSON.stringify(frameData, null, 2)}
+          </Text>
+        </ScrollView>
       </View>
 
-      {/* Data Fields */}
-      <View style={styles.dataContainer}>
-        <View style={styles.dataBox}>
-          <Text style={styles.dataTitle}>Góc nghiêng</Text>
-          <TextInput style={styles.dataValue} value="0.00" editable={false} />
+      {/* kết quả từ Api PAL */}
+      {apiResult && (
+        <View style={styles.resultContainer}>
+          <Text style={styles.sectionTitle}>Kết quả API</Text>
+          <Text style={styles.resultText}>
+          Dự đoán bằng số: {apiResult?.predicted_class} {"\n"}
+</Text>
+          <Text style={styles.resultText}>
+            Dự đoán bằng chữ: {predictedLetter} {"\n"}
+          </Text>
+          <Text style={styles.resultText}>Xác suất dự đoán:</Text>
+          <ScrollView style={styles.resultBox}>
+            {apiResult.prediction[0].map((probability, index) => (
+              <Text key={index} style={styles.probabilityText}>
+                {String.fromCharCode(65 + index)}: {probability.toFixed(4)}
+              </Text>
+            ))}
+          </ScrollView>
         </View>
-        <View style={styles.dataBox}>
-          <Text style={styles.dataTitle}>Gia tốc</Text>
-          <TextInput style={styles.dataValue} value="0.00" editable={false} />
-        </View>
-        <View style={styles.dataBox}>
-          <Text style={styles.dataTitle}>Vận tốc</Text>
-          <TextInput style={styles.dataValue} value="0.00" editable={false} />
-        </View>
-      </View>
+      )}
 
-      {/* Start Button */}
-      <TouchableOpacity
+      {/* Action Buttons */}
+
+      {/* <TouchableOpacity
         style={[
           styles.startButton,
           { backgroundColor: isStarted ? "#FF0000" : "#007BFF" },
         ]}
         onPress={handlePress}
       >
-        <Text style={styles.startButtonText}>{isStarted ? "Kết thúc ngay" : "Bắt đầu"}</Text>
+        <Text style={styles.startButtonText}>
+          {isStarted ? "Dừng lại" : "Bắt đầu"}
+        </Text>
+      </TouchableOpacity> */}
+
+      <TouchableOpacity
+        style={[styles.processButton, { backgroundColor: "#28A745" }]}
+        onPress={processData}
+      >
+        <Text style={styles.processButtonText}>Xử lý dữ liệu</Text>
       </TouchableOpacity>
     </View>
   );
@@ -75,67 +136,84 @@ export default function DataScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    padding: 20,
+    padding: 16,
+    backgroundColor: "#F5F5F5",
   },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 20,
+    marginBottom: 16,
   },
   headerTitle: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: "bold",
   },
   frameContainer: {
-    marginBottom: 20,
+    marginVertical: 16,
   },
   sectionTitle: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: "bold",
-    marginBottom: 10,
+    marginBottom: 8,
   },
   frameBox: {
-    height: 150,
-    backgroundColor: "#d3d3d3",
-    borderRadius: 10,
-    padding: 10,
-    justifyContent: "center",
-    alignItems: "center",
+    padding: 12,
+    backgroundColor: "#FFF",
+    borderRadius: 8,
+    elevation: 2,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+    maxHeight: 150,
   },
   frameText: {
     fontSize: 14,
     color: "#333",
-    textAlign: "center",
   },
-  dataContainer: {
-    marginBottom: 20,
+  resultContainer: {
+    marginVertical: 16,
   },
-  dataBox: {
-    marginBottom: 15,
-    padding: 10,
-    borderRadius: 10,
-    backgroundColor: "#d3d3d3",
+  resultBox: {
+    padding: 12,
+    backgroundColor: "#FFF",
+    borderRadius: 8,
+    elevation: 2,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+    maxHeight: 150,
   },
-  dataTitle: {
-    fontSize: 14,
-    fontWeight: "bold",
-    marginBottom: 5,
-  },
-  dataValue: {
+  resultText: {
     fontSize: 16,
+    fontWeight: "bold",
     color: "#333",
   },
+  probabilityText: {
+    fontSize: 14,
+    color: "#555",
+  },
   startButton: {
-    width: "100%",
-    height: 50,
-    borderRadius: 10,
-    justifyContent: "center",
+    marginTop: 20,
+    paddingVertical: 12,
+    borderRadius: 8,
     alignItems: "center",
   },
   startButtonText: {
-    color: "#fff",
+    color: "#FFF",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  processButton: {
+    marginTop: 10,
+    paddingVertical: 12,
+    borderRadius: 8,
+    alignItems: "center",
+  },
+  processButtonText: {
+    color: "#FFF",
     fontSize: 16,
     fontWeight: "bold",
   },

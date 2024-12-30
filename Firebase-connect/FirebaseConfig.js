@@ -4,14 +4,14 @@ import { getFirestore } from "firebase/firestore";
 import { getDatabase, ref, onValue } from "firebase/database";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDmGLdWtne-XC0kQI5wGBrH0rYqwMbF_h8",
-  authDomain: "signlanguage-7f551.firebaseapp.com",
-  databaseURL: "https://signlanguage-7f551-default-rtdb.asia-southeast1.firebasedatabase.app/",
-  projectId: "signlanguage-7f551",
-  storageBucket: "signlanguage-7f551.firebasestorage.app",
-  messagingSenderId: "114094126392",
-  appId: "1:114094126392:web:10eb8bcc45c1947c8e7dcd",
-  measurementId: "G-5L9Y62Y5EP"
+  apiKey: "AIzaSyDOzZqrBCLZYe49waH9ahhsxZDwsEL10-k",
+  authDomain: "dht11-d5cba.firebaseapp.com",
+  databaseURL: "https://dht11-d5cba-default-rtdb.firebaseio.com",
+  projectId: "dht11-d5cba",
+  storageBucket: "dht11-d5cba.firebasestorage.app",
+  messagingSenderId: "822104026737",
+  appId: "1:822104026737:web:dee669430efec4dfb135d0",
+  measurementId: "G-PYCK08QT6P"
 };
 
 const app = initializeApp(firebaseConfig);
