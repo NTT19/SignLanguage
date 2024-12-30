@@ -39,9 +39,11 @@ export default function DataScreen() {
 
 
     const payload = {
-      tilt_input: Object.values(frameData.tilt),
-      accel_input: [frameData.accel_x, frameData.accel_y, frameData.accel_z],
+      tilt_input: Array.from({length: 14}, (_, i) => frameData.tilt[`tilt_${i+1}`]),
+      accel_input: [frameData.accel_x, frameData.accel_y, frameData.accel_z]
     };
+
+     console.log('tilt_input:', payload.tilt_input);
 
     try {
       const response = await fetch(apiUrl, {
@@ -102,7 +104,7 @@ export default function DataScreen() {
           <ScrollView style={styles.resultBox}>
             {apiResult.prediction[0].map((probability, index) => (
               <Text key={index} style={styles.probabilityText}>
-                {String.fromCharCode(65 + index)}: {probability.toFixed(4)}
+                {String.fromCharCode(65 + index)}: {probability.toFixed(10)}
               </Text>
             ))}
           </ScrollView>
@@ -166,7 +168,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.2,
     shadowRadius: 1.41,
-    maxHeight: 150,
+    height: 165,
   },
   frameText: {
     fontSize: 14,
@@ -184,7 +186,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.2,
     shadowRadius: 1.41,
-    maxHeight: 150,
+    maxHeight: 160,
   },
   resultText: {
     fontSize: 16,
@@ -192,8 +194,10 @@ const styles = StyleSheet.create({
     color: "#333",
   },
   probabilityText: {
-    fontSize: 14,
+    fontSize: 10,
     color: "#555",
+    bottom:5,
+    
   },
   startButton: {
     marginTop: 20,
