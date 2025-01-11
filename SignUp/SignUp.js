@@ -1,86 +1,17 @@
-// import React from 'react';
-// import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
-
-// export default function SignUp({ navigation }) {
-//   return (
-//     <View style={styles.container}>
-//       <Text style={styles.title}>Sign Up</Text>
-//       <TextInput
-//         style={styles.input}
-//         placeholder="Enter your email"
-//         placeholderTextColor="#666"
-//       />
-//       <TextInput
-//         style={styles.input}
-//         placeholder="Enter your password"
-//         placeholderTextColor="#666"
-//         secureTextEntry
-//       />
-//       <TouchableOpacity style={styles.signUpButton}>
-//         <Text style={styles.signUpText}>Create Account</Text>
-//       </TouchableOpacity>
-//       <TouchableOpacity onPress={() => navigation.goBack()}>
-//         <Text style={styles.goBackText}>Already have an account? Log In</Text>
-//       </TouchableOpacity>
-//     </View>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     backgroundColor: '#FFF',
-//   },
-//   title: {
-//     fontSize: 24,
-//     fontWeight: 'bold',
-//     marginBottom: 20,
-//   },
-//   input: {
-//     width: '80%',
-//     height: 50,
-//     borderColor: '#ddd',
-//     borderWidth: 1,
-//     borderRadius: 8,
-//     marginBottom: 15,
-//     paddingHorizontal: 10,
-//   },
-//   signUpButton: {
-//     width: '80%',
-//     height: 50,
-//     backgroundColor: '#4CAF50',
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     borderRadius: 8,
-//     marginTop: 20,
-//   },
-//   signUpText: {
-//     color: '#FFF',
-//     fontWeight: 'bold',
-//     fontSize: 16,
-//   },
-//   goBackText: {
-//     marginTop: 20,
-//     color: '#4CAF50',
-//     fontWeight: 'bold',
-//   },
-// });
-
-
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { collection, addDoc } from 'firebase/firestore';
+import { auth, db } from '../Firebase-connect/FirebaseConfig'; // Đường dẫn đến tệp firebase.js
 
 export default function SignUp({ navigation }) {
-  // States for Input Fields
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [company, setCompany] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const handleSignUp = () => {
+  const handleSignUp = async () => {
     if (!username || !email || !company || !password || !confirmPassword) {
       alert('Please fill in all fields');
       return;
@@ -89,14 +20,37 @@ export default function SignUp({ navigation }) {
       alert('Passwords do not match');
       return;
     }
-    alert(`Welcome, ${username}! Your account has been created.`);
-  };
 
+    try {
+      // Tạo tài khoản với email và password
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // Cập nhật tên người dùng trên Firebase Authentication
+      await updateProfile(user, { displayName: username });
+
+      // Lưu thông tin user vào Firestore
+      const userData = {
+        fullName: username,
+        email: user.email,
+        address: company,
+        createdAt: new Date().toISOString(),
+      };
+
+      await addDoc(collection(db, 'users'), userData);
+
+      alert(`Welcome, ${username}! Your account has been created.`);
+      navigation.navigate('Login'); // Điều hướng tới màn hình Login
+    } catch (error) {
+      console.log("Error Details:", error); 
+      alert(`Sign Up Failed: ${error.message}`);
+    }
+  };
 
   return (
     <View style={styles.root}>
       <View style={styles.rectangle1} />
-    <Image source={require('../assets/Image/Plantify_no_background.png')} style={styles.headerImage} />
+      <Image source={require('../assets/Image/Plantify_no_background.png')} style={styles.headerImage} />
       <Text style={styles.title}>Sign Up</Text>
 
       {/* Username Input */}
@@ -157,11 +111,6 @@ export default function SignUp({ navigation }) {
           Already have an account? <Text style={{ color: 'green' }}>Sign In</Text>
         </Text>
       </TouchableOpacity>
-
-      {/* Decorative Images */}
-      {/* <Image source={require('../assets/Image/FB.png')} style={styles.vectorImage} />
-      <Image source={require('../assets/Image/FB.png')} style={styles.vectorImage} />
-      <Image source={require('../assets/Image/FB.png')} style={styles.vectorImage} /> */}
     </View>
   );
 }
@@ -174,13 +123,13 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: '#fff',
   },
-    headerImage: {
-        marginTop: 1,
-        width: 420,
-        height: 245,
-        resizeMode: 'contain',
-        backgroundColor: '#fff',
-      },
+  headerImage: {
+    marginTop: 1,
+    width: 420,
+    height: 245,
+    resizeMode: 'contain',
+    backgroundColor: '#fff',
+  },
   root: {
     flex: 1,
     justifyContent: 'center',
@@ -222,11 +171,5 @@ const styles = StyleSheet.create({
     marginTop: 20,
     fontSize: 14,
     color: '#666',
-  },
-  vectorImage: {
-    width: 100,
-    height: 100,
-    marginTop: 20,
-    resizeMode: 'contain', 
   },
 });
