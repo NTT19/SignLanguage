@@ -295,8 +295,9 @@ export default function LoginScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
+      {/* <Text style={styles.title}>Smart Language</Text> */}
         <View style={styles.logo}></View>
-        <Text style={styles.title}>IOT Gesture Glove</Text>
+        <Text style={styles.title}>Smart Language</Text>
       </View>
 
       <View style={styles.inputContainer}>
@@ -355,7 +356,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-    backgroundColor: '#fff',
+    backgroundColor: '#ffffff',
   },
   logoContainer: {
     alignItems: 'center',

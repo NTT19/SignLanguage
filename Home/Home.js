@@ -41,14 +41,14 @@ export default function HomeScreen({ navigation }) {
 
       {/* Navigation */}
       <View style={styles.navigation}>
-        <TouchableOpacity style={[styles.navButton, { backgroundColor: '#8de4af' }]} onPress={handleTraining}>
+        <TouchableOpacity style={[styles.navButton, { backgroundColor: '#1e90ff' }]} onPress={handleTraining}>
             <Text style={styles.navText}>Huấn luyện</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.navButton, { backgroundColor: '#7db6f9' }]}>
+        <TouchableOpacity style={[styles.navButton, { backgroundColor: '#6ab04c' }]}>
           <Text style={styles.navText}>Thống kê</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.navButton, { backgroundColor: '#e3bc78' }]}>
-          <Text style={styles.navText}>Cài đặt</Text>
+        <TouchableOpacity style={[styles.navButton, { backgroundColor: '#ffa502' }]}>
+        <Text style={styles.navText}>Cài đặt</Text>
         </TouchableOpacity>
       </View>
     </View>
