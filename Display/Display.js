@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { database, ref, onValue } from "../Firebase-connect/FirebaseConfig";
+import * as Speech from 'expo-speech';
 
 export default function DataScreen() {
   const [isStarted, setIsStarted] = useState(false);
@@ -129,7 +130,7 @@ export default function DataScreen() {
       </View>
 
       {/* Frame Section */}
-      {/* <View style={styles.frameContainer}>
+      <View style={styles.frameContainer}>
         <Text style={styles.sectionTitle}>Dữ liệu từ Firebase</Text>
         <ScrollView style={styles.frameBox}>
           <Text style={styles.frameText}>
@@ -140,7 +141,7 @@ export default function DataScreen() {
               : "Không có dữ liệu hoặc dữ liệu không hợp lệ."}
           </Text>
         </ScrollView>
-      </View> */}
+      </View>
 
       {/* API Result Section */}
       {apiResult && (
@@ -170,6 +171,15 @@ export default function DataScreen() {
         </View>
       )}
 
+          {predictedLetter && (
+          <TouchableOpacity
+            style={[styles.processButton, { backgroundColor: "#007BFF" }]}
+            onPress={() => Speech.speak(predictedLetter)}
+          >
+          <Text style={styles.processButtonText}>Đọc kết quả</Text>
+         </TouchableOpacity>
+        )}
+
       {/* Action Buttons */}
       <TouchableOpacity
         style={[styles.processButton, { backgroundColor: "#28A745" }]}
@@ -191,7 +201,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 16,
+    marginBottom: 10,
   },
   headerTitle: {
     fontSize: 18, 
@@ -203,8 +213,8 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 20, 
     fontWeight: "bold",
-    marginBottom: 8,
-    marginTop: 10,
+    marginBottom: 3,
+    
   },
   frameBox: {
     padding: 12,
@@ -261,6 +271,18 @@ const styles = StyleSheet.create({
   },
   processButtonText: {
     fontSize: 20, 
+    color: "#FFF",
+    fontWeight: "bold",
+  },
+  processButton: {
+    marginTop: 20,
+    paddingVertical: 12,
+    borderRadius: 8,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  processButtonText: {
+    fontSize: 20,
     color: "#FFF",
     fontWeight: "bold",
   },
