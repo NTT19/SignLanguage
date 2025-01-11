@@ -20,7 +20,7 @@ export default function DataScreen() {
       if (data && typeof data === "object") {
         setFrameData(data);
       } else {
-        setFrameData(null); // Gán null nếu dữ liệu không hợp lệ
+        setFrameData(null); 
       }
     });
 
