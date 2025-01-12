@@ -6,14 +6,14 @@ export default function RealtimeDataScreen() {
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    // Lấy dữ liệu từ Firebase
-    const reference = database.ref('/https://dht11-d5cba-default-rtdb.firebaseio.com'); // Thay '/path-to-your-data' bằng đường dẫn trong Firebase
+
+    const reference = database.ref('/https://dht11-d5cba-default-rtdb.firebaseio.com'); 
     const onValueChange = reference.on('value', (snapshot) => {
       const value = snapshot.val();
-      setData(value); // Lưu dữ liệu vào state
+      setData(value); 
     });
 
-    // Hủy lắng nghe khi component bị unmount
+ 
     return () => reference.off('value', onValueChange);
   }, []);
 

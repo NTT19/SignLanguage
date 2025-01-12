@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { collection, addDoc } from 'firebase/firestore';
-import { auth, db } from '../Firebase-connect/FirebaseConfig'; // Đường dẫn đến tệp firebase.js
-
+import { auth, db } from '../Firebase-connect/FirebaseConfig'; 
 export default function SignUp({ navigation }) {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -26,10 +25,10 @@ export default function SignUp({ navigation }) {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // Cập nhật tên người dùng trên Firebase Authentication
+
       await updateProfile(user, { displayName: username });
 
-      // Lưu thông tin user vào Firestore
+
       const userData = {
         fullName: username,
         email: user.email,
@@ -40,7 +39,7 @@ export default function SignUp({ navigation }) {
       await addDoc(collection(db, 'users'), userData);
 
       alert(`Welcome, ${username}! Your account has been created.`);
-      navigation.navigate('Login'); // Điều hướng tới màn hình Login
+      navigation.navigate('Login'); 
     } catch (error) {
       console.log("Error Details:", error); 
       alert(`Sign Up Failed: ${error.message}`);

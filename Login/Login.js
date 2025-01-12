@@ -27,10 +27,10 @@ export default function LoginScreen({ navigation }) {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // Hiển thị thông báo thành công
+
       Alert.alert('Thành công', `Chào mừng, ${user.email}!`);
       
-      // Chuyển hướng đến trang chính
+
       navigation.navigate('HomeV1');
     } catch (error) {
       Alert.alert('Lỗi', 'Email hoặc mật khẩu không đúng.');

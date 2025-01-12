@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth"; // Thêm Authentication
-import { getFirestore } from "firebase/firestore"; // Firestore
-import { getDatabase, ref, onValue } from "firebase/database"; // Realtime Database
+import { getAuth } from "firebase/auth"; 
+import { getFirestore } from "firebase/firestore"; 
+import { getDatabase, ref, onValue } from "firebase/database"; 
 
 // Cấu hình Firebase
 const firebaseConfig = {
@@ -15,13 +15,12 @@ const firebaseConfig = {
   measurementId: "G-PYCK08QT6P",
 };
 
-// Khởi tạo Firebase App
+
 const app = initializeApp(firebaseConfig);
 
-// Khởi tạo Firebase Services
-const auth = getAuth(app); // Authentication
-const db = getFirestore(app); // Firestore
-const database = getDatabase(app); // Realtime Database
 
-// Xuất các service để sử dụng trong ứng dụng
+const auth = getAuth(app); 
+const db = getFirestore(app); 
+const database = getDatabase(app); 
+
 export { auth, db, database, ref, onValue };
