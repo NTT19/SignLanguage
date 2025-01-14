@@ -49,7 +49,7 @@ export default function LoginScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
-        <View style={styles.logo}></View>
+          <Image source={require('../assets/Image/sign-language.png')} style={styles.headerImage} />
         <Text style={styles.title}>Smart Language</Text>
       </View>
 
@@ -197,5 +197,12 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  headerImage: {
+    marginTop: 1,
+    width: 420,
+    height: 245,
+    resizeMode: 'contain',
+    backgroundColor: '#fff',
   },
 });

@@ -49,7 +49,7 @@ export default function SignUp({ navigation }) {
   return (
     <View style={styles.root}>
       <View style={styles.rectangle1} />
-      <Image source={require('../assets/Image/Plantify_no_background.png')} style={styles.headerImage} />
+      <Image source={require('../assets/Image/sign-language.png')} style={styles.headerImage} />
       <Text style={styles.title}>Sign Up</Text>
 
       {/* Username Input */}
@@ -73,7 +73,7 @@ export default function SignUp({ navigation }) {
       {/* Company Input */}
       <TextInput
         style={styles.input}
-        placeholder="Company"
+        placeholder="Address"
         placeholderTextColor="#666"
         value={company}
         onChangeText={setCompany}

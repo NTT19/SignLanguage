@@ -95,7 +95,7 @@ export default function DataScreen() {
       D: require("../assets/Image/D.png"),
       E: require("../assets/Image/E.png"),
       F: require("../assets/Image/F.png"),
-      G: require("../assets/Image/J.png"),
+      G: require("../assets/Image/G.png"),
       H: require("../assets/Image/H.png"),
       I: require("../assets/Image/I.png"),
       J: require("../assets/Image/J.png"),
@@ -106,6 +106,7 @@ export default function DataScreen() {
       O: require("../assets/Image/O.png"),
       P: require("../assets/Image/P.png"),
       Q: require("../assets/Image/Q.png"),
+      R: require("../assets/Image/R.png"),
       O: require("../assets/Image/O.png"),
       S: require("../assets/Image/S.png"),
       T: require("../assets/Image/T.png"),
@@ -208,13 +209,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   frameContainer: {
-    marginVertical: 16,
+    marginVertical: 1,
   },
   sectionTitle: {
-    fontSize: 20, 
+    fontSize: 18, 
     fontWeight: "bold",
-    marginBottom: 3,
-    
+    marginBottom: 3,    
   },
   frameBox: {
     padding: 12,
@@ -225,10 +225,10 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.2,
     shadowRadius: 1.41,
-    height: 165,
+    height: 105,
   },
   frameText: {
-    fontSize: 16, 
+    fontSize: 10, 
     color: "#333",
 
   },
@@ -236,10 +236,12 @@ const styles = StyleSheet.create({
     marginVertical: 16,
   },
   resultText: {
-    top: 12,
+    top: 1,
     fontSize: 20,
     fontWeight: "bold",
     color: "#333",
+    paddingLeft: 70,
+   
   },
   probabilityText: {
     fontSize: 16, 
@@ -249,6 +251,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     color: "#FF0000",
+    
   },
   predictedLetter: {
     fontSize: 20,
@@ -257,10 +260,10 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     alignItems: "center",
-    marginTop: 20,
+    marginTop: 10,
   },
   image: {
-    width: 200,
+    width: 1200,
     height: 150,
   },
   processButton: {
